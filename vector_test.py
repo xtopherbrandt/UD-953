@@ -80,6 +80,35 @@ class VectorTests(unittest.TestCase):
         V2 = Vector([4.4, 5.5, 6.6])
         self.assertAlmostEqual( V1.angle( V2, radians=False ), 12.933, places=3 )
 
+    def test_VectorIsParallelToItself(self):
+        V1 = Vector([1.,2.,3.])
+        self.assertTrue( V1.isParallel(V1) )
+
+    def test_VectorIsParallelToNegativeOfItself(self):
+        V1 = Vector([1.,2.,3.])
+        self.assertTrue( V1.isParallel(V1 * -1) )       
+
+    def test_VectorIsParallelToAMultipleOfItSelf(self):
+        V1 = Vector([1.,2.,3.])
+        self.assertTrue( V1.isParallel(V1 * 2) ) 
+
+    def test_VectorIsNotParallelToANonMultipleofItself(self):
+        V1 = Vector([1.,2.,3.])
+        V2 = Vector([2.,3.,4.])
+        self.assertFalse( V1.isParallel( V2 ) )
+
+    def test_VectorIsOrthogonalToZerovector(self):
+        V1 = Vector([1.,2.,3.])
+        self.assertTrue( V1.isOrthogonal(Vector.Zero( 3 )) )
+
+    def test_VectorIsOrthogonalToAnOrthogonalVector(self):
+        V1 = Vector([1.,2.])
+        V2 = Vector([1.,-0.5])
+        self.assertTrue( V1.isOrthogonal(V2) )
+
+    def test_VectorIsNotOrthogonalToAParallelVector(self):
+        V1 = Vector([1.,2.,3.])
+        self.assertFalse( V1.isOrthogonal(V1 * 2) )
 
     
 if __name__ == '__main__':

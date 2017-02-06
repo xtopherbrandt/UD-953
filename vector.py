@@ -1,6 +1,12 @@
 import math
 
 class Vector(object):
+
+                
+    @staticmethod
+    def Zero(dimensions):
+        return Vector( [0] * dimensions )
+
     def __init__(self, coordinates):
         try:
             if not coordinates:
@@ -29,7 +35,7 @@ class Vector(object):
         return Vector( map( lambda x, y: x - y, self.coordinates, other.coordinates ) )
 
     def __mul__(self, other):
-        if type(other) is float: 
+        if type(other) is float or type(other) is int: 
             return Vector( map( lambda x: x * other, self.coordinates) )
         elif type(other) is Vector:
             return reduce( lambda x, y: x + y, map( lambda x, y: (x * y), self.coordinates, other.coordinates ))
@@ -51,4 +57,12 @@ class Vector(object):
             return math.acos( (self * other) / (self.magnitude() * other.magnitude()))
         else:
             return math.degrees( math.acos( (self * other) / (self.magnitude() * other.magnitude())))
-            
+
+    def isOrthogonal(self, other):
+        return True if round(( self * other ), 10) == 0 else False
+
+    def isZero(self):
+        return True if round(self.magnitude(),10) == 0 else False
+
+    def isParallel(self, other):
+        return (self.isZero() or other.isZero() or self.angle( other ) == 0 or self.angle( other ) == math.pi )
