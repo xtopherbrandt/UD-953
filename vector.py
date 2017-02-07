@@ -52,6 +52,9 @@ class Vector(object):
     def direction(self):
         return self * ( 1 / self.magnitude() )
 
+    def unit(self):
+        return self.direction()
+
     def angle(self, other, radians=True):
         if radians:
             return math.acos( (self * other) / (self.magnitude() * other.magnitude()))
@@ -66,3 +69,21 @@ class Vector(object):
 
     def isParallel(self, other):
         return (self.isZero() or other.isZero() or self.angle( other ) == 0 or self.angle( other ) == math.pi )
+
+    '''
+    Projection of a vector, other, on to this vector
+    '''
+    def proj(self, other):
+        return self.unit() * (self.unit() * other)
+
+    '''
+    Opposite of projection, this function finds the projection of this vector parallel (on to) the other
+    '''
+    def parallelTo(self, basis):
+        return basis.unit() * (basis.unit() * self)
+
+    '''
+    The vector perpendicular to the basis vector that adds to the parallel vector to equal this vector
+    '''
+    def perpendicularTo(self, basis):
+        return self - self.parallelTo( basis )

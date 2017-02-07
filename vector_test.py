@@ -110,6 +110,25 @@ class VectorTests(unittest.TestCase):
         V1 = Vector([1.,2.,3.])
         self.assertFalse( V1.isOrthogonal(V1 * 2) )
 
+    def test_ProjectionOfVOnB(self):
+        V = Vector([1.,2.,3.])
+        B = Vector([3.,4.,5.])
+        self.assertEqual( B.proj(V).round(3), Vector([1.56, 2.08, 2.60]))
+
+    def test_VParallelToB(self):
+        V = Vector([1.,2.,3.])
+        B = Vector([3.,4.,5.])
+        self.assertEqual( V.parallelTo(B).round(3), Vector([1.56, 2.08, 2.60]))
     
+    def test_VPerpendicularToB(self):
+        V = Vector([1.,2.,3.])
+        B = Vector([3.,4.,5.])
+        self.assertEqual( V.perpendicular(B).round(3), Vector([-0.56, -0.08, 0.40]))
+
+    def test_VPerpPlusVParallelEqualV(self):
+        V = Vector([1.,2.,3.])
+        B = Vector([3.,4.,5.])
+        self.assertEqual( V.perpendicularTo(B) + V.parallelTo(B), V )
+                
 if __name__ == '__main__':
     unittest.main()
