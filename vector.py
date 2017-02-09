@@ -87,3 +87,24 @@ class Vector(object):
     '''
     def perpendicularTo(self, basis):
         return self - self.parallelTo( basis )
+    
+    '''
+    Computes the cross product of 2 3-dimensional vectors
+    '''
+    def cross(self, other):
+        if len(self.coordinates) != 3 :
+            print "Can only cross 3D vectors"
+            return Vector.Zero()
+        x1 = self.coordinates[0]
+        y1 = self.coordinates[1]
+        z1 = self.coordinates[2]
+        x2 = other.coordinates[0]
+        y2 = other.coordinates[1]
+        z2 = other.coordinates[2]
+        return Vector([(y1 * z2)-(y2*z1), -1 * ((x1 * z2)-(x2 * z1)), (x1 * y2)-(x2 * y1)])
+    
+    def areaSpannedTo(self, other):
+        return self.cross(other).magnitude()
+
+    def areaOfTriangleTo(self, other):
+        return self.areaSpannedTo(other) * 0.5

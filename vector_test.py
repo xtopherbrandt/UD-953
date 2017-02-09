@@ -123,12 +123,33 @@ class VectorTests(unittest.TestCase):
     def test_VPerpendicularToB(self):
         V = Vector([1.,2.,3.])
         B = Vector([3.,4.,5.])
-        self.assertEqual( V.perpendicular(B).round(3), Vector([-0.56, -0.08, 0.40]))
+        self.assertEqual( V.perpendicularTo(B).round(3), Vector([-0.56, -0.08, 0.40]))
 
     def test_VPerpPlusVParallelEqualV(self):
         V = Vector([1.,2.,3.])
         B = Vector([3.,4.,5.])
         self.assertEqual( V.perpendicularTo(B) + V.parallelTo(B), V )
                 
+    def test_VCrossWIsPerpendicularToV(self):
+        V = Vector([1.,2.,3.])
+        W = Vector([3.,4.,5.])
+        self.assertTrue( V.cross(W).perpendicularTo(V) )
+                
+    def test_VCrossWIsPerpendicularToW(self):
+        V = Vector([1.,2.,3.])
+        W = Vector([3.,4.,5.])
+        self.assertTrue( V.cross(W).perpendicularTo(W) )
+                        
+    def test_VCrossWIsNegativeWCrossV(self):
+        V = Vector([1.,2.,3.])
+        W = Vector([3.,4.,5.])
+        self.assertEqual( V.cross(W), W.cross(V) * -1 )
+                
+    def test_VCrossWIsCorrect(self):
+        V = Vector([1.,2.,3.])
+        W = Vector([3.,4.,5.])
+        self.assertEqual( V.cross(W).round(3), Vector([-2.,4.,-2.]) )
+
+
 if __name__ == '__main__':
     unittest.main()
